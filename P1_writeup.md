@@ -1,6 +1,9 @@
 # **Finding Lane Lines on the Road** 
 ---
-**The goals / steps of this project are the following:**
+
+**Finding Lane Lines on the Road**
+
+The goals / steps of this project are the following:
 * Make a pipeline that finds lane lines on the road
 * Reflect on your work in a written report
 
@@ -38,19 +41,19 @@ The pipeline takes a color image as input and returns a copy of the image with l
 
 **The draw_lines( ) Function**
 
-The purpose of the draw_lines( ) function, is to draw a single, solid line over the left lane line and a single, solid line over the right lane line, both lines starting from the bottom of the image and extending out to the top of the region of interest. The function, as provided, drew all the Hough transform line segments. In order to achieve what was needed, I modified the function to do the following:
+The purpose of the draw_lines( ) function is to draw a single, solid line over the left lane line and a single, solid line over the right lane line, both lines starting from the bottom of the image and extending out to the top of the region of interest. The function, as provided, drew all the Hough transform line segments. In order to achieve the function purpose, I modified the function to do the following:
 
-1. separate the Hough line segments into set of segments with negative and positive slopes. Given the origin (0, 0) is at the left top corner, negative slope segments represent the left lane and positive slope segments the right.
+1. separate the Hough line segments into set of segments with negative and positive slopes. The origin (0, 0) of the image being the top left corner, negative slope segments represent the left lane and positive slope segments the right
 
-2. for both, left-lane and right-lane segment sets, fit a least-squares first-degree polynomial, to approximate a single line for each lane.
+2. for both, left lane and right lane segment sets, fit a least-squares first-degree polynomial, to approximate a single line for each lane
 
-3. define first-degree polynomials for left and right lanes, with respective slopes and intercepts, to be used later to plot lane lines on the image.
+3. define first-degree polynomials for left and right lanes, with respective slopes and intercepts, to be used later to plot lane lines on the image
 
 4. calculate the x-coordinate min and max values required for both lane lines, based on the coefficients of the fitted lines
 
 5. draw the left and right lane lines with min and max x-coordinates and y-coordinate calculated from the first-degree polynomial defined in #3
 
-Below images show outputs of the pipeline steps run on a sample image:
+Below images show outputs of the pipeline steps run on a test image:
 
 
 
@@ -74,7 +77,7 @@ Extrapolated Line Image    |Superimposed Lane Lines
 
 **Potential shortcomings of the current pipeline**
 
-The pipeline finds and marks lane lines based on a first-degree polynomial, essentially working with only straight lines in the image. One potential shortcoming here would be the inability of the current pipeline to find lanes that curve. Also, with curved lanes, the current way of identifying the sets of left and right line segments using the slope will be erroneous as the line segments identified by the Houghs transform for one (or both) of the lane lines could have positive as well as negative slopes, depending on how the curve turns.  
+The pipeline finds and marks lane lines based on a first-degree polynomial, essentially working with only straight lines in the image. One potential shortcoming here would be the inability of the current pipeline to find lanes that curve. Also, with curved lanes, the current way of identifying the sets of left and right line segments using the slope will be erroneous as the line segments identified by the Houghs transform for one (or both) of the lane lines could have positive as well as negative slopes, depending on how the curve bends - left, right, or zig-zag.  
 
 Another potential shortcoming could be that the pipeline has a fixed region of interest (RoI), with the 'line of sight' fixed to a certain height in the image. This will limit how far ahead the vehicle can "see" when approaching a gradient. For example, when approaching a steep up-hill gradient, the vehicle would see the road only till a shorter distance and might want to have the RoI height a little higher so as to see as much of the road ahead as possible in order to make better decisions.
 
